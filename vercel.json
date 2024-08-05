@@ -1,15 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "builds": [{ "src": "api/**/*.js", "use": "@vercel/node" }],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/process-background-image.js"
+      "src": "/api/process-background-image",
+      "dest": "/api/process-background-image.js"
     }
   ]
 }
