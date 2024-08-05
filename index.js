@@ -4,6 +4,7 @@ import cors from "cors";
 import multer from "multer";
 import "dotenv/config";
 import processBackgroundImage from "./api/process-background-image.js";
+import uploadTest from "./api/upload.js";
 
 const port = process.env.PORT || 3040;
 const CANVA_APP_ID = process.env.CANVA_APP_ID?.toLowerCase();
@@ -39,16 +40,9 @@ app.use(
   })
 );
 
-app.post("/api/upload", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send("No file uploaded.");
-  }
+app.use(express.json());
 
-  console.log({ file: req.file.buffer });
-  // Send the file back to the client
-  //   res.set("Content-Type", req.file.mimetype);
-  res.status(200).send(req.file.buffer);
-});
+app.post("/api/upload", upload.single("image"), uploadTest);
 
 app.post(
   "/api/process-background-image",

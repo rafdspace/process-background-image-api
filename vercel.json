@@ -5,6 +5,10 @@
     {
       "src": "/api/process-background-image",
       "dest": "/api/process-background-image.js"
+    },
+    {
+      "src": "/api/upload",
+      "dest": "/api/upload.js"
     }
   ]
 }
