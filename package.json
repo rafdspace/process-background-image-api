@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "main": "api/background-remover.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node api/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.7.3",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "form-data": "^4.0.0",
     "formdata-node": "^6.0.3",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^3.3.2"

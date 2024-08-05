@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import bodyParser from "body-parser";
-import removeBackground from "./api/remove-background.js";
+import axios from "axios";
 
 const PORT = process.env.PORT || 3040;
 const CANVA_APP_ID = process.env.CANVA_APP_ID?.toLowerCase();
@@ -35,7 +35,28 @@ app.use(
 app.use(bodyParser.json()); // Use body-parser middleware
 
 // Endpoint to handle image processing
-app.post("/api/remove-background", removeBackground);
+app.post("/api/remove-background", async (req, res) => {
+  const { imageUrl } = req.body; // Get the image URL from the request body
+  if (!imageUrl) {
+    return res.status(400).json({ error: "Image URL is required" });
+  }
+
+  try {
+    // Step 1: Download the image
+    const response = await axios.get(imageUrl, {
+      responseType: "arraybuffer",
+    });
+
+    const imageBytes = response.data;
+
+    // Step 2: Send the image back to the client
+    res.set("Content-Type", response.headers["content-type"]);
+    res.send(imageBytes);
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+    res.status(500).json({ error: "Failed to process image" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
