@@ -42,6 +42,7 @@ const processBackgroundImage = async (req, res) => {
       const resultBuffer = Buffer.from(resultArrayBuffer);
 
       res.setHeader("Content-Type", "image/png");
+      res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
       res.send(resultBuffer);
     } catch (error) {
       console.error("Error processing image:", error);

@@ -4,7 +4,7 @@ import multer from "multer";
 import "dotenv/config";
 import processBackgroundImage from "./api/process-background-image.js";
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3040;
 const CANVA_APP_ID = process.env.CANVA_APP_ID?.toLowerCase();
 
 if (!CANVA_APP_ID) {
@@ -33,6 +33,8 @@ app.use(
       }
     },
     optionsSuccessStatus: 200,
+    methods: "POST",
+    allowedHeaders: "Content-Type",
   })
 );
 
