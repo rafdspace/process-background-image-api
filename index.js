@@ -39,6 +39,17 @@ app.use(
   })
 );
 
+app.post("/api/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  console.log({ file: req.file.buffer });
+  // Send the file back to the client
+  //   res.set("Content-Type", req.file.mimetype);
+  res.status(200).send(req.file.buffer);
+});
+
 app.post(
   "/api/process-background-image",
   upload.single("image"),
