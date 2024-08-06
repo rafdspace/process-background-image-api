@@ -53,7 +53,7 @@ app.post("/api/remove-background", async (req, res) => {
     // Step 2: Call to the Remove Background API
     const form = new FormData();
     form.append("image_file", imageBytes, "image.jpg");
-    form.append("image_file", imageBytes, "image.jpg");
+    form.append("size", "hd");
 
     const uploadResponse = await axios.post(
       "https://sdk.photoroom.com/v1/segment",
