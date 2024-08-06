@@ -1,8 +1,9 @@
 import express from "express";
+import axios from "axios";
+import FormData from "form-data";
 import cors from "cors";
 import "dotenv/config";
 import bodyParser from "body-parser";
-import axios from "axios";
 
 const PORT = process.env.PORT || 3040;
 const CANVA_APP_ID = process.env.CANVA_APP_ID?.toLowerCase();
@@ -49,9 +50,26 @@ app.post("/api/remove-background", async (req, res) => {
 
     const imageBytes = response.data;
 
-    // Step 2: Send the image back to the client
-    res.set("Content-Type", response.headers["content-type"]);
-    res.send(imageBytes);
+    // Step 2: Call to the Remove Background API
+    const form = new FormData();
+    form.append("image_file", imageBytes, "image.jpg");
+    form.append("image_file", imageBytes, "image.jpg");
+
+    const uploadResponse = await axios.post(
+      "https://sdk.photoroom.com/v1/segment",
+      form,
+      {
+        headers: {
+          "x-api-key": process.env.PHOTOROOM_API_KEY, // Use environment variable for the API key
+          ...form.getHeaders(),
+        },
+        responseType: "arraybuffer",
+      }
+    );
+
+    // Step 3: Send the result image back to the client
+    res.set("Content-Type", "image/png");
+    res.send(uploadResponse.data);
   } catch (error) {
     console.error("An error occurred:", error.message);
     res.status(500).json({ error: "Failed to process image" });
