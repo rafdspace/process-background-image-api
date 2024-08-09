@@ -9,10 +9,7 @@ import bodyParser from "body-parser";
 const PORT = process.env.PORT || 3040;
 const CANVA_APP_ID = process.env.CANVA_APP_ID?.toLowerCase();
 
-const allowlist = [
-  `https://app-${CANVA_APP_ID}.canva-apps.com`,
-  "http://localhost:3000",
-];
+const allowlist = [`https://app-${CANVA_APP_ID}.canva-apps.com`];
 
 if (!CANVA_APP_ID) {
   console.error("Environment variable CANVA_APP_ID is not set or empty");
